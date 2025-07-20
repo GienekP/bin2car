@@ -7,7 +7,7 @@
 /*--------------------------------------------------------------------*/
 typedef unsigned char U8;
 /*--------------------------------------------------------------------*/
-#define CARMAX (1024*1024)
+#define CARMAX (4096*1024)
 /*--------------------------------------------------------------------*/
 void bin2car(const char *filebin, const char *filecar, U8 code)
 {
@@ -22,9 +22,24 @@ void bin2car(const char *filebin, const char *filecar, U8 code)
 	{
 		i=fread(data,sizeof(U8),CARMAX,pf);
 		fclose(pf);
+		if (code==0)
+		{
+			switch (i)
+			{
+				case (4096*1024): {code=0x3F;} break;
+				case (2048*1024): {code=0x40;} break;
+				case (512*1024): {code=0x70;} break;
+				case (256*1024): {code=0x6D;} break;
+				case (128*1024): {code=0x6C;} break;
+				default: {code=0x2A;} break;
+			};
+			header[7]=code;
+		};
 		switch (code)
 		{
 			case 0x2A: {size=1024*1024;} break;
+			case 0x3F: {size=4096*1024;} break;
+			case 0x40: {size=2048*1024;} break;
 			case 0x4B: {size=1024*1024;} break;
 			case 0x6C: {size=128*1024;} break;
 			case 0x6D: {size=256*1024;} break;
@@ -106,7 +121,7 @@ int main( int argc, char* argv[] )
 	printf("BIN2CAR - ver: %s\n",__DATE__);
 	if (argc==3)
 	{
-		bin2car(argv[1],argv[2],0x2A);
+		bin2car(argv[1],argv[2],0x00);
 	} else
 	if (argc==4)
 	{
@@ -117,6 +132,8 @@ int main( int argc, char* argv[] )
 		printf("(c) GienekP\n"
 			"use:\nbin2car file.bin file.car 2A\n"
 			"  2A - Atarimax 1 MB Flash (old)\n"
+			"  3F - MegaCart 4 MB cartridge\n"
+			"  40 - MegaCart 2 MB cartridge\n"			
 			"  4B - Atarimax 1 MB Flash (new)\n"
 			"  6C - J(atari)Cart128(kB)\n"
 			"  6D - J(atari)Cart256(kB)\n"
