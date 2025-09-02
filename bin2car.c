@@ -45,10 +45,10 @@ void bin2car(const char *filebin, const char *filecar, U8 code)
 			case 0x3F: {size=4096*1024;} break;
 			case 0x40: {size=2048*1024;} break;
 			case 0x4B: {size=1024*1024;} break;
-			case 0x68: {size=128*1024;} break;
-			case 0x69: {size=128*1024;} break;
-			case 0x6A: {size=128*1024;} break;
-			case 0x6B: {size=128*1024;} break;
+			case 0x68: {size=8*1024;} break;
+			case 0x69: {size=16*1024;} break;
+			case 0x6A: {size=32*1024;} break;
+			case 0x6B: {size=64*1024;} break;
 			case 0x6C: {size=128*1024;} break;
 			case 0x6D: {size=256*1024;} break;
 			case 0x6E: {size=512*1024;} break;
