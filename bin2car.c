@@ -3,6 +3,7 @@
 /* by GienekP                                                         */
 /* (c) 2025                                                           */
 /*--------------------------------------------------------------------*/
+#include <stdlib.h>
 #include <stdio.h>
 /*--------------------------------------------------------------------*/
 typedef unsigned char U8;
@@ -13,9 +14,10 @@ void bin2car(const char *filebin, const char *filecar, U8 code)
 {
 	U8 header[16]={0x43, 0x41, 0x52, 0x54, 0x00, 0x00, 0x00, code,
 		           0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00};
-	U8 data[CARMAX];
+	U8 *data;
 	unsigned int i,size=0,sum=0;
 	FILE *pf;
+	data=(U8 *)malloc((CARMAX)*sizeof(U8));
 	for (i=0; i<CARMAX; i++) {data[i]=0xFF;};
 	pf=fopen(filebin,"rb");
 	if (pf)
@@ -73,7 +75,9 @@ void bin2car(const char *filebin, const char *filecar, U8 code)
 			if (i==size) {printf("Save %ikB of CAR ( 0x%02X )\n",size/1024,(unsigned int)(code));};
 			fclose(pf);
 		};		
-	};	
+	};
+	free(data);
+	data=NULL;	
 }
 /*--------------------------------------------------------------------*/
 U8 char2hex(char c)
