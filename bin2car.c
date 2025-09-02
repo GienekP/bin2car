@@ -31,6 +31,10 @@ void bin2car(const char *filebin, const char *filecar, U8 code)
 				case (512*1024): {code=0x70;} break;
 				case (256*1024): {code=0x6D;} break;
 				case (128*1024): {code=0x6C;} break;
+				case (64*1024): {code=0x6B;} break;
+				case (32*1024): {code=0x6A;} break;
+				case (16*1024): {code=0x69;} break;
+				case (8*1024): {code=0x68;} break;
 				default: {code=0x2A;} break;
 			};
 			header[7]=code;
@@ -41,6 +45,10 @@ void bin2car(const char *filebin, const char *filecar, U8 code)
 			case 0x3F: {size=4096*1024;} break;
 			case 0x40: {size=2048*1024;} break;
 			case 0x4B: {size=1024*1024;} break;
+			case 0x68: {size=128*1024;} break;
+			case 0x69: {size=128*1024;} break;
+			case 0x6A: {size=128*1024;} break;
+			case 0x6B: {size=128*1024;} break;
 			case 0x6C: {size=128*1024;} break;
 			case 0x6D: {size=256*1024;} break;
 			case 0x6E: {size=512*1024;} break;
@@ -135,6 +143,10 @@ int main( int argc, char* argv[] )
 			"  3F - MegaCart 4 MB cartridge\n"
 			"  40 - MegaCart 2 MB cartridge\n"			
 			"  4B - Atarimax 1 MB Flash (new)\n"
+			"  68 - J(atari)Cart8(kB)\n"
+			"  69 - J(atari)Cart16(kB)\n"
+			"  6A - J(atari)Cart32(kB)\n"
+			"  6B - J(atari)Cart64(kB)\n"
 			"  6C - J(atari)Cart128(kB)\n"
 			"  6D - J(atari)Cart256(kB)\n"
 			"  6E - J(atari)Cart512(kB)\n"
